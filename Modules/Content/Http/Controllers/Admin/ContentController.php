@@ -92,12 +92,15 @@ class ContentController extends AdminBaseController
 
     public function ajaxcall(Request $request)
     {  
-        $url=$_GET['url']; 
-        $img_extenstion=['gif','cms','js','html'] ;            
+        $url=$_GET['url'];
+        $img_extenstion=['gif','cms','js','html'];
         $ch=curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		// stop CURL from verifying the peer's certificate
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_POST, 0);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         $result = curl_exec($ch);
